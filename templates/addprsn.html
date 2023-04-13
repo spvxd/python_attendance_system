@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "head.html" %}
+</head>
+<body>
+
+{% include "navbar.html" %}
+<div class="row text-center" style="padding: 20px;margin: 20px;">
+        <div class="col"
+            style="border-radius: 20px;padding: 0px;background-color:rgb(211,211,211,0.5);margin:0px 10px 10px 10px;min-height: 400px;">
+            <h2 style="border-radius: 20px 20px 0px 0px;background-color: #0b4c61;color: white;padding: 10px;">Добавить студента в базу данных <i class="material-icons"></i>
+            </h2>
+<section class="py-1">
+
+        <div class="col-lg-8 offset-lg-2">
+            <hr>
+            <form class="form" method="post" action="/addprsn_submit">
+                <div class="form-group row">
+                    <label for="txtnbr" class="col-sm-2 col-form-label">ID</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="txtnbr" name="txtnbr" value={{ newnbr }} >
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtname" class="col-sm-2 col-form-label">ФИО</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="txtname" name="txtname" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="optgrp" class="col-sm-2 col-form-label">Группа</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" name="optgrp" id="optgrp">
+                            <option value="ИТСС-19">ИТСС-19</option>
+                            <option value="ИС-19">ИС-19</option>
+                            <option value="Другая">Другое</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-8">
+                        <input type="submit" class="btn btn-primary btn-lg" value="Сохранить">
+                        <a href="/" type="button" class="btn btn-warning btn-lg"><b>Назад</b></a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+</section>
+      </div>
+ </div>
+</body>
+</html>
