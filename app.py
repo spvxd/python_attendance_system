@@ -29,7 +29,7 @@ mycursor = mydb.cursor()
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Генерируем датасет >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 def generate_dataset(nbr):
     face_classifier = cv2.CascadeClassifier(
-        "C:/Users/Admin/Desktop/diplom-master/resources/haarcascade_frontalface_default.xml")
+        "C:/Users/Admin/PycharmProjects/python_attendance_system/resources/haarcascade_frontalface_default.xml")
 
     def face_cropped(img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -90,7 +90,7 @@ def generate_dataset(nbr):
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Обучение классификатора >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 @app.route('/train_classifier/<nbr>')
 def train_classifier(nbr):
-    dataset_dir = "C:/Users/Admin/Desktop/diplom-master/dataset"
+    dataset_dir = "C:/Users/Admin/PycharmProjects/python_attendance_system/dataset"
 
     path = [os.path.join(dataset_dir, f) for f in os.listdir(dataset_dir)]
     faces = []
@@ -198,7 +198,7 @@ def face_recognition():  # генерирование кадра за кадро
         return img
 
     faceCascade = cv2.CascadeClassifier(
-        "C:/Users/Admin/Desktop/diplom-master/resources/haarcascade_frontalface_default.xml")
+        "C:/Users/Admin/PycharmProjects/python_attendance_system/resources/haarcascade_frontalface_default.xml")
     clf = cv2.face.LBPHFaceRecognizer_create()
     clf.read("classifier.xml")
 
