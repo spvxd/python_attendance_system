@@ -228,6 +228,10 @@ def home():
 
     return render_template('index.html', data=data)
 
+@app.route('/test')
+def test():
+    return render_template('temp.html')
+
 
 @app.route('/<int:id>/del')
 def delete(id):
