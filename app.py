@@ -1,4 +1,6 @@
-from flask import Flask, render_template, request, session, redirect, url_for, Response, jsonify
+import secrets
+
+from flask import Flask, render_template, request, session, redirect, url_for, Response, jsonify, flash, current_app
 import mysql.connector
 import cv2
 from PIL import Image
@@ -8,6 +10,7 @@ import time
 from datetime import date
 import winsound
 from playsound import playsound
+from secrets import token_bytes
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
@@ -163,6 +166,7 @@ def face_recognition():  # генерирование кадра за кадро
                 pname = row[1]
                 pgrp = row[2]
 
+
                 if int(cnt) == 30:
                     cnt = 0
 
@@ -223,10 +227,26 @@ def face_recognition():  # генерирование кадра за кадро
 
 @app.route('/')
 def home():
-    mycursor.execute("select prs_nbr, prs_name, prs_grp, prs_active, prs_added from prs_mstr")
+    mycursor.execute("select prs_nbr, prs_name, prs_grp, prs_course, prs_added from prs_mstr")
     data = mycursor.fetchall()
 
     return render_template('index.html', data=data)
+
+
+def save_images(photo):
+    hash_photo = secrets.token_urlsafe(10)
+    _, file_extension = os.path.splitext(photo.filename)
+    photo_name = hash_photo + file_extension
+    file_path = os.path.join(current_app.root_path, 'static/images', photo_name)
+    photo.save(file_path)
+    return photo_name
+@app.route('/person/<int:id>')
+def person(id):
+    mycursor.execute("select prs_nbr, prs_name, prs_grp, prs_course, prs_tel, prs_email, prs_added, prs_img from prs_mstr WHERE prs_nbr=%s", (id,))
+    data = mycursor.fetchall()
+
+    return render_template('person.html', data=data)
+
 
 @app.route('/test')
 def test():
@@ -239,7 +259,7 @@ def delete(id):
     mydb.commit()
 
 
-    mycursor.execute("select prs_nbr, prs_name, prs_grp, prs_active, prs_added from prs_mstr")
+    mycursor.execute("select prs_nbr, prs_name, prs_grp, prs_course, prs_added from prs_mstr")
     data = mycursor.fetchall()
 
     return render_template('index.html', data=data)
@@ -251,7 +271,7 @@ def addprsn():
     nbr = row[0]
     # print(int(nbr))
 
-    return render_template('addprsn.html', newnbr=int(nbr))
+    return render_template('temp.html', newnbr=int(nbr))
 
 
 @app.route('/addprsn_submit', methods=['POST'])
@@ -259,9 +279,13 @@ def addprsn_submit():
     prsnbr = request.form.get('txtnbr')
     prsname = request.form.get('txtname')
     prsgrp = request.form.get('optgrp')
+    prstel = request.form.get('tel')
+    prscourse = request.form.get('course')
+    prsemail = request.form.get('email')
+    img = save_images(request.files['image'])
 
-    mycursor.execute("""INSERT INTO `prs_mstr` (`prs_nbr`, `prs_name`, `prs_grp`) VALUES
-                    ('{}', '{}', '{}')""".format(prsnbr, prsname, prsgrp))
+    mycursor.execute("""INSERT INTO `prs_mstr` (`prs_nbr`, `prs_name`, `prs_grp`, `prs_tel`, `prs_course`,`prs_email`,`prs_img` ) VALUES
+                    ('{}', '{}', '{}', '{}', '{}', '{}', '{}')""".format(prsnbr, prsname, prsgrp, prstel, prscourse, prsemail, img))
     mydb.commit()
 
     # return redirect(url_for('home'))
