@@ -3,7 +3,7 @@
 <head>
     {% include "head.html" %}
     <style>
-			label, h5{
+			label, {
 				font-size: 27px;
 			}
 		 </style>
@@ -20,56 +20,63 @@
 
         <div class="col-lg-8 offset-lg-2">
             <hr>
-            <form method="POST" action="." class="needs-validation" enctype='multipart/form-data'>
+            <form method="POST" action="/addprsn_submit" class="needs-validation" enctype='multipart/form-data'>
         <input type="hidden" name="csrfmiddlewaretoken" value="OXlNPTuG87gmpZkBZ01MMxD4O0RnuNN9dP9XFQvn6TwufnaPYrqTGKXigmujZ1je">
         <div class="row">
             <div class="col-md-4">
                 <h5 class="text-muted">Основная информация:</h5><br>
 
+                <div class="m-1">
+                    <label>ID:</label>
+                     <input type="text" class="form-control" id="txtnbr" name="txtnbr" value={{ newnbr }} readonly>
+                </div>
 
-                    <div class="m-1">
-                        <label>ФИО:</label>
-                        <input type="text" name="first_name" maxlength="70" class="form-control" required id="id_first_name">
-                    </div>
 
                 <div class="ml-1">
                     <label>Номер телефона:</label>
-                    <input type="number" name="phone" min="-9223372036854775808" max="9223372036854775807" class="form-control" required id="id_phone">
+                    <input type="number" name="tel" min="-9223372036854775808" max="9223372036854775807" class="form-control" required id="id_phone">
                 </div>
                 <div class="m-1">
                     <label>Email:</label>
-                    <input type="email" name="email" maxlength="254" class="form-control" required id="id_email">
+                    <input type="email" name="email" maxlength="254" class="form-control"  id="id_email">
                 </div>
                 <div class="m-1">
                     <label>Дата рождения:</label>
-                    <input type="date" name="date" class="form-control" required id="id_date">
+                    <input type="date" name="date" class="form-control"  id="id_date">
                 </div>
             </div>
 
 
             <div class="col-md-4">
                 <h5 class="text-muted">Дополнительная информация:</h5><br>
+                 <div class="m-1">
+                        <label>ФИО:</label>
+                        <input type="text" name="txtname" maxlength="70" class="form-control" required id="id_first_name">
+                    </div>
+
                 <div class="m-1">
                     <label>Группа:</label>
-                    <input type="text" name="profession" maxlength="200" class="form-control" required id="id_profession">
-                </div>
-                <div class="m-1">
-                    <label>Курс:</label>
-                    <select name="status" class="form-control" id="id_status">
-  <option value="first" selected>1</option>
-  <option value="second">2</option>
-  <option value="third">3</option>
-  <option value="four">4</option>
+                    <select name="optgrp" class="form-control" id="id_status">
+  <option value="ИТСС" selected>ИТСС</option>
+  <option value="ИС">ИС</option>
+  <option value="МОАИС">МОАИС</option>
+  <option value="ИБ">ИБ</option>
 
 </select>
                 </div>
                 <div class="m-1">
-                    <label>Регистрация:</label>
-                    <input type="time" name="shift" class="form-control" required id="id_shift">
+                    <label>Курс:</label>
+                    <select name="course" class="form-control" id="id_status">
+  <option value="1" selected>1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+
+</select>
                 </div>
                 <div class="mx-auto " style="width: 4rem;">
                     <label>Оценка/5:</label>
-                    <input type="number" name="ranking" class="form-control" required id="id_ranking">
+                    <input type="number" name="ranking" class="form-control"  id="id_ranking">
                 </div>
             </div>
 
