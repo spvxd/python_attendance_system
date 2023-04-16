@@ -43,9 +43,9 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>ФИо</th>
+                        <th>ФИО</th>
                         <th>Группа</th>
-                        <th>Активность</th>
+                        <th>Курс</th>
                         <th>Добавлен</th>
                         <th>Действие</th>
                     </tr>
@@ -58,7 +58,10 @@
                             <td>{{item[2]}}</td>
                             <td>{{item[3]}}</td>
                             <td>{{item[4]}}</td>
-                            <td> <a href="/{{item[0]}}/del" type="button" class="btn btn-danger btn-lg"><b>Удалить</b></a></td>
+                            <td><a href="/person/{{item[0]}}" type="button" class="btn btn-warning btn-lg"><b>Посмотреть</b></a>
+                                <a href="/{{item[0]}}/del" type="button" class="btn btn-danger btn-lg"><b>Удалить</b></a>
+                            </td>
+
                         </tr>
                     {% endfor %}
                 </tbody>
