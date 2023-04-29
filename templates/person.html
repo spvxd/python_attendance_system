@@ -8,56 +8,144 @@
 
 {% include "navbar.html" %}
 
-<div class="container emp-profile">
-{% for item in data %}
-    <div class="row">
-        <div class="col-md-3">
-        <img src="../static/images/{{item[7]}}" alt="" width="100%">
-            <h6 class="text-muted p-1"> ID: {{item[0]}}</h6>
 
-        </div>
-        <div class="col-md-6">
-            <div class="profile-head">
+{% for item in data %}
+
+<div class="container emp-profile">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-img">
+                    <img src="../static/images/{{item[7]}}" alt="" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="profile-head">
+                    <h5>
+                        {{item[1]}}
+                    </h5>
+                    <h6>
+                        {{item[2]}}
+                    </h6>
+                    <p class="proile-rating">Курс <span>{{item[3]}}</span></p>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                aria-controls="home" aria-selected="true">Информация</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                aria-controls="profile" aria-selected="false">Посещения</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <a href=""><input type="button" class="profile-edit-btn" name="btnAddMore" value="Редактировать" /></a>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-work">
+                    <p>Ссылки</p>
+                    <a href="">ВК</a><br />
+                    <a href="">GitHub</a><br />
+                    <a href="">PortalULSU</a>
+                    <p>Предметы</p>
+                    <a href="">Базы данных</a><br />
+                    <a href="">Цифровая обработка сигналов</a><br />
+                    <a href="">Теория информации</a><br />
+                    <a href="">Web программирование</a><br />
+                    
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="tab-content profile-tab" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>ID</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{item[0]}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>ФИО</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{item[1]}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Email</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{item[6]}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Телефон</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{item[5]}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Группа</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{item[2]}}</p>
+                            </div>
+                        </div>
+                         <div class="row">
+                            <div class="col-md-6">
+                                <label>Курс</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{item[3]}}</p>
+                            </div>
+                        </div>
+                         <div class="row">
+                            <div class="col-md-6">
+                                <label>Дата рождения</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>27.03.2002</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor%}
 
-    </div>
-    <hr>
-
-    <div class="tab-content" id="myTabContent">
-        <br>
-        <table class="table table-striped ">
-            <thead>
-                <tr>
-                    <th scope="col">ФИО</th>
-                    <th scope="col">Группа</th>
-                    <th scope="col">Курс</th>
-                    <th scope="col">Номер телефона</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Добавлен</th>
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
 
-                </tr>
-            </thead>
-            <tbody>
 
-                <tr>
-                    <td>{{item[1]}}</td>
-                    <td>{{item[2]}}</td>
-                    <td>{{item[3]}}</td>
-                    <td>{{item[4]}}</td>
-                    <td>{{item[5]}}</td>
-                    <td>{{item[6]}}</td>
+                        <table class="table" style="width: 80%; background-color: white;" >
+                <thead>
+                    <tr>
+                        <th>Время</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for count in data2 %}
+                        <tr>
+                            <td>{{count[0]}}</td>
 
-                </tr>
-                {% endfor%}
-            </tbody>
-        </table>
-    </div>
+
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+                    </div>
+                </div>
+            </div>
+        </div>
 </div>
-
-</div>
-
 
 </body>
 </html>

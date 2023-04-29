@@ -6,110 +6,114 @@
 			label, {
 				font-size: 27px;
 			}
-		 </style>
+
+    </style>
 </head>
 <body>
 
 {% include "navbar.html" %}
 <div class="row text-center" style="padding: 20px;margin: 20px;">
-        <div class="col"
-            style="border-radius: 20px;padding: 0px;background-color:rgb(211,211,211,0.5);margin:0px 10px 10px 10px;min-height: 400px;">
-            <h2 style="border-radius: 20px 20px 0px 0px;background-color: #0b4c61;color: white;padding: 10px;">Добавить студента в базу данных <i class="material-icons"></i>
-            </h2>
-<section class="py-1">
+    <div class="col"
+         style="border-radius: 20px;padding: 0px;background-color:rgb(211,211,211,0.5);margin:0px 10px 10px 10px;min-height: 400px;">
+        <h2 style="border-radius: 20px 20px 0px 0px;background-color: #0b4c61;color: white;padding: 10px;">Добавить
+            студента в базу данных <i class="material-icons"></i>
+        </h2>
+        <section class="py-1">
 
-        <div class="col-lg-8 offset-lg-2">
-            <hr>
-            <form method="POST" action="/addprsn_submit" class="needs-validation" enctype='multipart/form-data'>
-        <input type="hidden" name="csrfmiddlewaretoken" value="OXlNPTuG87gmpZkBZ01MMxD4O0RnuNN9dP9XFQvn6TwufnaPYrqTGKXigmujZ1je">
-        <div class="row">
-            <div class="col-md-4">
-                <h5 class="text-muted">Основная информация:</h5><br>
+            <div class="col-lg-8 offset-lg-2">
+                <hr>
+                <form method="POST" action="/addprsn_submit" class="needs-validation" enctype='multipart/form-data' novalidate>
+                    <input type="hidden" name="csrfmiddlewaretoken"
+                           value="OXlNPTuG87gmpZkBZ01MMxD4O0RnuNN9dP9XFQvn6TwufnaPYrqTGKXigmujZ1je">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5 class="text-muted">Основная информация:</h5><br>
 
-                <div class="m-1">
-                    <label>ID:</label>
-                     <input type="text" class="form-control" id="txtnbr" name="txtnbr" value={{ newnbr }} readonly>
-                </div>
-
-
-                <div class="ml-1">
-                    <label>Номер телефона:</label>
-                    <input type="number" name="tel" min="-9223372036854775808" max="9223372036854775807" class="form-control" required id="id_phone">
-                </div>
-                <div class="m-1">
-                    <label>Email:</label>
-                    <input type="email" name="email" maxlength="254" class="form-control"  id="id_email">
-                </div>
-                <div class="m-1">
-                    <label>Дата рождения:</label>
-                    <input type="date" name="date" class="form-control"  id="id_date">
-                </div>
-            </div>
+                            <div class="m-1">
+                                <label>ID:</label>
+                                <input type="text" class="form-control" id="txtnbr" name="txtnbr" value={{ newnbr }}
+                                       readonly>
+                            </div>
 
 
-            <div class="col-md-4">
-                <h5 class="text-muted">Дополнительная информация:</h5><br>
-                 <div class="m-1">
-                        <label>ФИО:</label>
-                        <input type="text" name="txtname" maxlength="70" class="form-control" required id="id_first_name">
+                            <div class="ml-1">
+                                <label>Номер телефона:</label>
+                                <input type="number" name="tel" min="-9223372036854775808" max="9223372036854775807"
+                                       class="form-control" required id="id_phone">
+                            </div>
+                            <div class="m-1">
+                                <label>Email:</label>
+                                <input type="email" name="email" maxlength="254" class="form-control" id="id_email">
+                            </div>
+                            <div class="m-1">
+                                <label>Дата рождения:</label>
+                                <input type="date" name="date" class="form-control" id="id_date">
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+                            <h5 class="text-muted">Дополнительная информация:</h5><br>
+                            <div class="m-1">
+                                <label>ФИО:</label>
+                                <input type="text" name="txtname" maxlength="70" class="form-control" required
+                                       id="id_first_name">
+                            </div>
+
+                            <div class="m-1">
+                                <label>Группа:</label>
+                                <select name="optgrp" class="form-control" id="id_status">
+                                    <option value="ИТСС" selected>ИТСС</option>
+                                    <option value="ИС">ИС</option>
+                                    <option value="МОАИС">МОАИС</option>
+                                    <option value="ИБ">ИБ</option>
+
+                                </select>
+                            </div>
+                            <div class="m-1">
+                                <label>Курс:</label>
+                                <select name="course" class="form-control" id="id_status">
+                                    <option value="1" selected>1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4">
+                            <h5 class="text-muted">Загрузить фото:</h5><br>
+                            <div>
+                                <div class="alert alert-warning">
+                                    <svg width="1.0625em" height="1em" viewBox="0 0 17 16"
+                                         class="bi bi-exclamation-triangle"
+                                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                              d="M7.938 2.016a.146.146 0 0 0-.054.057L1.027 13.74a.176.176 0 0 0-.002.183c.016.03.037.05.054.06.015.01.034.017.066.017h13.713a.12.12 0 0 0 .066-.017.163.163 0 0 0 .055-.06.176.176 0 0 0-.003-.183L8.12 2.073a.146.146 0 0 0-.054-.057A.13.13 0 0 0 8.002 2a.13.13 0 0 0-.064.016zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/>
+                                        <path
+                                                d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z"/>
+                                    </svg>
+                                    <small>Используйте только фото формата .jpg</small>
+                                </div>
+                                <img src="/static/img/bio.jpg" alt="" width="100%">
+                            </div>
+                            <div class="mt-3">
+                                <input type="file" name="image" accept="image/*" required id="id_image">
+                            </div>
+                        </div>
+
                     </div>
-
-                <div class="m-1">
-                    <label>Группа:</label>
-                    <select name="optgrp" class="form-control" id="id_status">
-  <option value="ИТСС" selected>ИТСС</option>
-  <option value="ИС">ИС</option>
-  <option value="МОАИС">МОАИС</option>
-  <option value="ИБ">ИБ</option>
-
-</select>
-                </div>
-                <div class="m-1">
-                    <label>Курс:</label>
-                    <select name="course" class="form-control" id="id_status">
-  <option value="1" selected>1</option>
-  <option value="2">2</option>
-  <option value="3">3</option>
-  <option value="4">4</option>
-
-</select>
-                </div>
-                <div class="mx-auto " style="width: 4rem;">
-                    <label>Оценка/5:</label>
-                    <input type="number" name="ranking" class="form-control"  id="id_ranking">
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <h5 class="text-muted">Загрузить фото:</h5><br>
-                <div>
-                    <div class="alert alert-warning">
-                        <svg width="1.0625em" height="1em" viewBox="0 0 17 16" class="bi bi-exclamation-triangle"
-                            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M7.938 2.016a.146.146 0 0 0-.054.057L1.027 13.74a.176.176 0 0 0-.002.183c.016.03.037.05.054.06.015.01.034.017.066.017h13.713a.12.12 0 0 0 .066-.017.163.163 0 0 0 .055-.06.176.176 0 0 0-.003-.183L8.12 2.073a.146.146 0 0 0-.054-.057A.13.13 0 0 0 8.002 2a.13.13 0 0 0-.064.016zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z" />
-                            <path
-                                d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z" />
-                        </svg>
-                        <small>Используйте только фото формата .jpg</small>
+                    <div class="mt-3">
+                        <input type="submit" class="btn btn-primary btn-lg" value="Сохранить">
+                        <a href="/" type="button" class="btn btn-warning btn-lg"><b>Назад</b></a>
                     </div>
-                    <img src="/static/img/bio.jpg" alt="" width="100%">
-                </div>
-                <div class="mt-3">
-                    <input type="file" name="image" accept="image/*" required id="id_image">
-                </div>
+                </form>
             </div>
 
-        </div>
-        <div class="mt-3">
-             <input type="submit" class="btn btn-primary btn-lg" value="Сохранить">
-            <a href="/" type="button" class="btn btn-warning btn-lg"><b>Назад</b></a>
-        </div>
-    </form>
-        </div>
-
-</section>
-      </div>
- </div>
+        </section>
+    </div>
+</div>
 </body>
 </html>
