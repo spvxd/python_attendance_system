@@ -1,5 +1,4 @@
 import secrets
-
 from flask import Flask, render_template, request, session, redirect, url_for, Response, jsonify, flash, current_app
 import mysql.connector
 import cv2
@@ -27,7 +26,7 @@ mydb = mysql.connector.connect(
     charset='utf8'
 )
 
-mycursor = mydb.cursor()
+mycursor = mydb.cursor(buffered=True)
 
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Генерируем датасет >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 def generate_dataset(nbr):
@@ -76,7 +75,7 @@ def generate_dataset(nbr):
 
             file_name_path = "dataset/" + nbr + "." + str(img_id) + ".jpg"
             cv2.imwrite(file_name_path, face)
-            cv2.putText(face, str(count_img), (50, 50), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 0), 2)
+            #cv2.putText(face, str(count_img), (50, 50), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 0), 2)
             mycursor.execute  ("""INSERT INTO `img_dataset` (`img_id`, `img_person`) VALUES
                                 ('{}', '{}')""".format(img_id, nbr))
             mydb.commit()
@@ -240,12 +239,18 @@ def save_images(photo):
     file_path = os.path.join(current_app.root_path, 'static/images', photo_name)
     photo.save(file_path)
     return photo_name
+
+
 @app.route('/person/<int:id>')
 def person(id):
-    mycursor.execute("select prs_nbr, prs_name, prs_grp, prs_course, prs_tel, prs_email, prs_added, prs_img from prs_mstr WHERE prs_nbr=%s", (id,))
+    mycursor.execute("select * from prs_mstr WHERE prs_nbr=%s", (id,))
     data = mycursor.fetchall()
+    mycursor.execute("select accs_added from accs_hist WHERE accs_prsn=%s", (id,))
+    # mycursor.execute(
+    #     "select accs_id, accs_added, accs_prsn from accs_hist")
+    data2 = mycursor.fetchall()
 
-    return render_template('person.html', data=data)
+    return render_template('person.html', data=data, data2=data2)
 
 
 @app.route('/test')
