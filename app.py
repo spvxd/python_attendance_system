@@ -119,7 +119,7 @@ def train_classifier(nbr):
 def face_recognition():  # генерирование кадра за кадром с камеры
     def draw_boundary(img, classifier, scaleFactor, minNeighbors, color, text, clf):
         gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        features = classifier.detectMultiScale(gray_image, scaleFactor, minNeighbors)
+        features = classifier.detectMultiScale(gray_image, scaleFactor = 1.3, minNeighbors = 5)
 
         global justscanned
         global pause_cnt
@@ -133,7 +133,7 @@ def face_recognition():  # генерирование кадра за кадро
             id, pred = clf.predict(gray_image[y:y + h, x:x + w])
             confidence = int(100 * (1 - pred / 300))
 
-            if confidence > 70 and not justscanned:
+            if confidence > 75 and not justscanned:
                 global cnt
                 cnt += 1
 
