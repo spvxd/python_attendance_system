@@ -361,7 +361,7 @@ def loadData():
     )
     mycursor = mydb.cursor()
 
-    mycursor.execute("select a.accs_id, a.accs_prsn, b.prs_name, b.prs_grp, date_format(a.accs_added, '%H:%i:%s') "
+    mycursor.execute("SELECT a.accs_id, a.accs_prsn, b.prs_name, b.prs_grp, date_format(a.accs_added, '%H:%i:%s') "
                      "  from accs_hist a "
                      "  left join prs_mstr b on a.accs_prsn = b.prs_nbr "
                      " where a.accs_date = curdate() "
