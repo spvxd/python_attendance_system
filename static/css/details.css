@@ -38,7 +38,7 @@
 .profile-edit-btn{
     border: none;
     border-radius: 1.5rem;
-    width: 70%;
+    width: 100%;
     padding: 2%;
     font-weight: 600;
     color: #6c757d;
@@ -91,3 +91,20 @@
     font-weight: 600;
     color: #0062cc;
 }
+table {
+        border: 1px;
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 86%;
+        margin: auto;
+    }
+
+    td,
+    th {
+        border: 1px solid black !important;
+        padding: 5px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
