@@ -287,10 +287,12 @@ def addprsn_submit():
     prstel = request.form.get('tel')
     prscourse = request.form.get('course')
     prsemail = request.form.get('email')
+    prsbirth = request.form.get('birth')
+    prsbirth.format()
     img = save_images(request.files['image'])
 
-    mycursor.execute("""INSERT INTO `prs_mstr` (`prs_nbr`, `prs_name`, `prs_grp`, `prs_tel`, `prs_course`,`prs_email`,`prs_img` ) VALUES
-                    ('{}', '{}', '{}', '{}', '{}', '{}', '{}')""".format(prsnbr, prsname, prsgrp, prstel, prscourse, prsemail, img))
+    mycursor.execute("""INSERT INTO `prs_mstr` (`prs_nbr`, `prs_name`, `prs_grp`, `prs_tel`, `prs_course`,`prs_email`,`prs_img`, `prs_birth` ) VALUES
+                    ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')""".format(prsnbr, prsname, prsgrp, prstel, prscourse, prsemail, img, prsbirth))
     mydb.commit()
 
     # return redirect(url_for('home'))
