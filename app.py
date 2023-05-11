@@ -255,7 +255,7 @@ def person(id):
 
 @app.route('/test')
 def test():
-    return render_template('temp.html')
+    return render_template('choose.html')
 
 
 @app.route('/<int:id>/del')
