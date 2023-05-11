@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "head.html" %}
+    <style>
+			label, {
+				font-size: 27px;
+			}
+
+
+
+    </style>
+</head>
+<body>
+
+{% include "navbar.html" %}
+<div class="row text-center" style="padding: 20px;margin: 20px;">
+    <div class="col"
+         style="border-radius: 20px;padding: 0px;background-color:rgb(211,211,211,0.5);margin:0px 10px 10px 10px;min-height: 400px;">
+        <h2 style="border-radius: 20px 20px 0px 0px;background-color: #0b4c61;color: white;padding: 10px;">Выберите
+            аудиторию и преподавателя <i class="material-icons"></i>
+        </h2>
+        <section class="py-1">
+
+            <div class="col-lg-8 offset-lg-2">
+                <hr>
+                <form method="POST" action="/addprsn_submit" class="needs-validation" enctype='multipart/form-data'
+                      novalidate>
+                    <input type="hidden" name="csrfmiddlewaretoken"
+                           value="OXlNPTuG87gmpZkBZ01MMxD4O0RnuNN9dP9XFQvn6TwufnaPYrqTGKXigmujZ1je">
+                    <div class="r>
+                    <div class=" col-md-4">
+
+                    <div class="m-1">
+                        <label><b>Преподаватель:</b></label>
+                        <select name="optgrp" class="form-control" id="id_statusq">
+                            <option value="ИТСС" selected>Смолеха В.П.</option>
+                            <option value="ИС">Смагин А.А.</option>
+                            <option value="МОАИС">Булаев А.А.</option>
+                            <option value="ИБ">Курилова О.Л.</option>
+
+                        </select>
+                    </div>
+                    <div class="m-1">
+                        <label><b>Аудитория:</b></label>
+                        <select name="course" class="form-control" id="id_status">
+                            <option value="1" selected>24А</option>
+                            <option value="2">213</option>
+                            <option value="3">217</option>
+                            <option value="4">420</option>
+                        </select>
+                    </div>
+                    <div class="m-1">
+                        <label><b>Предмет:</b></label>
+                        <select name="course" class="form-control" id="id_status">
+                            <option value="1" selected>Программирование</option>
+                            <option value="2">Цифровая обработка сигналов</option>
+                            <option value="3">Теория информации</option>
+                            <option value="4">Базы данных</option>
+                        </select>
+                    </div>
+            </div>
+            <div class="mt-3">
+                <input type="submit" class="btn btn-primary btn-lg" value="Сохранить">
+                <a href="/" type="button" class="btn btn-warning btn-lg"><b>Назад</b></a>
+            </div>
+            </form>
+        </section>
+    </div>
+</div>
+</body>
+</html>
