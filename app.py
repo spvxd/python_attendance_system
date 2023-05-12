@@ -246,11 +246,11 @@ def person(id):
     mycursor.execute("select * from prs_mstr WHERE prs_nbr=%s", (id,))
     data = mycursor.fetchall()
     mycursor.execute("select accs_added from accs_hist WHERE accs_prsn=%s", (id,))
-    # mycursor.execute(
-    #     "select accs_id, accs_added, accs_prsn from accs_hist")
+    data3 = mycursor.fetchall()
+    mycursor.execute("select * from classes WHERE student=%s", (id,))
     data2 = mycursor.fetchall()
 
-    return render_template('person.html', data=data, data2=data2)
+    return render_template('person.html', data=data, data2=data2, data3 = data3)
 
 
 @app.route('/choose')
@@ -258,16 +258,22 @@ def choose():
     return render_template('choose.html')
 
 
-# @app.route('/choose_submit',  methods=['POST'])
-# def choose_submit():
-#     return render_template('fr_page.html')
+
+@app.route('/choose_submit',  methods=['POST'])
+def choose_submit():
+    teacher = request.form.get('teacher')
+    classroom = request.form.get('classroom')
+    subject = request.form.get('subject')
+    mycursor.execute("""INSERT INTO `classes` ( `teacher`, `subject`, `classroom` ) VALUES
+                        ('{}', '{}', '{}')""".format( teacher, subject, classroom))
+    mydb.commit()
+    return redirect(url_for('fr_page'))
 
 
 @app.route('/<int:id>/del')
 def delete(id):
     mycursor.execute("DELETE FROM prs_mstr WHERE prs_nbr=%s", (id,))
     mydb.commit()
-
 
     mycursor.execute("select prs_nbr, prs_name, prs_grp, prs_course, prs_added from prs_mstr")
     data = mycursor.fetchall()
@@ -293,7 +299,6 @@ def addprsn_submit():
     prscourse = request.form.get('course')
     prsemail = request.form.get('email')
     prsbirth = request.form.get('birth')
-    prsbirth.format()
     img = save_images(request.files['image'])
 
     mycursor.execute("""INSERT INTO `prs_mstr` (`prs_nbr`, `prs_name`, `prs_grp`, `prs_tel`, `prs_course`,`prs_email`,`prs_img`, `prs_birth` ) VALUES
@@ -321,7 +326,7 @@ def video_feed():
     return Response(face_recognition(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
-@app.route('/fr_page',methods=['POST'] )
+@app.route('/fr_page' )
 def fr_page():
     """Страница для сканирования."""
     mycursor.execute("select a.accs_id, a.accs_prsn, b.prs_name, b.prs_grp, a.accs_added "
@@ -330,14 +335,18 @@ def fr_page():
                      " where a.accs_date = curdate() "
                      " order by 1 desc")
     data = mycursor.fetchall()
-
+    print(data)
+    print(data[0][1])
+    cur_student = data[0][1]
+    mycursor.execute("""UPDATE classes SET student = {}""".format(cur_student))
+    # mycursor.execute("""INSERT INTO classes SELECT accs_prsn FROM accs_hist WHERE accs_id = 1""")
     return render_template('fr_page.html', data=data)
 
 @app.route('/fr_page_delete')
 def fr_page_delete():
     mycursor.execute("TRUNCATE TABLE `accs_hist`")
     mydb.commit()
-    return render_template('fr_page.html')
+    return redirect(url_for('fr_page' ))
 @app.route('/countTodayScan')
 def countTodayScan():
     mydb = mysql.connector.connect(
