@@ -124,19 +124,25 @@
 
 
 
-                        <table class="table" style="width: 80%; background-color: white;" >
+                        <table style="width: 100%; background-color: white;" >
                 <thead>
                     <tr>
                         <th>Время</th>
+                        <th>Аудитория</th>
+                        <th>Преподаватель</th>
+                        <th>Предмет</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for count in data2 %}
+                    {% for i in data3 %}
                         <tr>
-                            <td>{{count[0]}}</td>
-
-
+                            <td>{{i[0]}}</td>
+                            <td>{{count[4]}}</td>
+                            <td>{{count[2]}}</td>
+                            <td>{{count[3]}}</td>
                         </tr>
+                    {% endfor %}
                     {% endfor %}
                 </tbody>
 
