@@ -253,9 +253,14 @@ def person(id):
     return render_template('person.html', data=data, data2=data2)
 
 
-@app.route('/test')
-def test():
+@app.route('/choose')
+def choose():
     return render_template('choose.html')
+
+
+# @app.route('/choose_submit',  methods=['POST'])
+# def choose_submit():
+#     return render_template('fr_page.html')
 
 
 @app.route('/<int:id>/del')
@@ -316,7 +321,7 @@ def video_feed():
     return Response(face_recognition(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
-@app.route('/fr_page')
+@app.route('/fr_page',methods=['POST'] )
 def fr_page():
     """Страница для сканирования."""
     mycursor.execute("select a.accs_id, a.accs_prsn, b.prs_name, b.prs_grp, a.accs_added "
