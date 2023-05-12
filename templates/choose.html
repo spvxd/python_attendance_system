@@ -24,7 +24,7 @@
 
             <div class="col-lg-8 offset-lg-2">
                 <hr>
-                <form method="POST" action="/fr_page" class="needs-validation" enctype='multipart/form-data'
+                <form method="POST" action="/choose_submit" class="needs-validation" enctype='multipart/form-data'
                       novalidate>
                     <input type="hidden" name="csrfmiddlewaretoken"
                            value="OXlNPTuG87gmpZkBZ01MMxD4O0RnuNN9dP9XFQvn6TwufnaPYrqTGKXigmujZ1je">
@@ -33,30 +33,30 @@
 
                     <div class="m-1">
                         <label><b>Преподаватель:</b></label>
-                        <select name="optgrp" class="form-control" id="id_statusq">
-                            <option value="ИТСС" selected>Смолеха В.П.</option>
-                            <option value="ИС">Смагин А.А.</option>
-                            <option value="МОАИС">Булаев А.А.</option>
-                            <option value="ИБ">Курилова О.Л.</option>
+                        <select name="teacher" class="form-control" id="id_statusq">
+                            <option value="Смолеха В.П." selected>Смолеха В.П.</option>
+                            <option value="Смагин А.А.">Смагин А.А.</option>
+                            <option value="Булаев А.А.">Булаев А.А.</option>
+                            <option value="Курилова О.Л.">Курилова О.Л.</option>
 
                         </select>
                     </div>
                     <div class="m-1">
                         <label><b>Аудитория:</b></label>
-                        <select name="course" class="form-control" id="id_status">
-                            <option value="1" selected>24А</option>
-                            <option value="2">213</option>
-                            <option value="3">217</option>
-                            <option value="4">420</option>
+                        <select name="classroom" class="form-control" id="id_status">
+                            <option value="24А" selected>24А</option>
+                            <option value="213">213</option>
+                            <option value="217">217</option>
+                            <option value="420">420</option>
                         </select>
                     </div>
                     <div class="m-1">
                         <label><b>Предмет:</b></label>
-                        <select name="course" class="form-control" id="id_status">
-                            <option value="1" selected>Программирование</option>
-                            <option value="2">Цифровая обработка сигналов</option>
-                            <option value="3">Теория информации</option>
-                            <option value="4">Базы данных</option>
+                        <select name="subject" class="form-control" id="id_status">
+                            <option value="Программирование" selected>Программирование</option>
+                            <option value="Цифровая обработка сигналов">Цифровая обработка сигналов</option>
+                            <option value="Теория информации">Теория информации</option>
+                            <option value="Базы данных">Базы данных</option>
                         </select>
                     </div>
             </div>
