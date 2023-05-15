@@ -172,7 +172,10 @@ def face_recognition():  # генерирование кадра за кадро
                     mycursor.execute("insert into accs_hist (accs_date, accs_prsn) values('" + str(
                         date.today()) + "', '" + pnbr + "')")
                     mydb.commit()
-
+                    sql = "UPDATE classes SET accs_prsn = %s WHERE teacher IS NOT NULL"
+                    val = (pnbr,)
+                    mycursor.execute(sql, val)
+                    mydb.commit()
                     cv2.putText(img, pname + ' | ' + pgrp, (x - 100, y - 30), cv2.FONT_HERSHEY_COMPLEX, 0.8,
                                 (153, 255, 255), 2, cv2.LINE_AA)
                     current_path = os.path.dirname(__file__)
@@ -266,9 +269,12 @@ def choose_submit():
     teacher = request.form.get('teacher')
     classroom = request.form.get('classroom')
     subject = request.form.get('subject')
+    # sql = "UPDATE classes SET teacher = %s, subject = %s,  classroom = %s WHERE accs_prsn IS NOT NULL"
+    # val = (teacher, subject, classroom)
+    # mycursor.execute(sql, val)
     mycursor.execute("""INSERT INTO `classes` ( `teacher`, `subject`, `classroom` ) VALUES
-                            ( '{}', '{}', '{}')""".format(teacher, subject, classroom))
-
+                            ('{}', '{}', '{}')""".format(teacher, subject, classroom))
+    mydb.commit()
     return redirect(url_for('fr_page'))
 
 
