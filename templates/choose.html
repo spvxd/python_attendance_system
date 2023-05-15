@@ -9,6 +9,10 @@
 
 
 
+
+
+
+
     </style>
 </head>
 <body>
@@ -24,12 +28,10 @@
 
             <div class="col-lg-8 offset-lg-2">
                 <hr>
-                <form method="POST" action="/choose_submit" class="needs-validation" enctype='multipart/form-data'
+                <form method="POST" action="choose_submit" class="needs-validation" enctype='multipart/form-data'
                       novalidate>
                     <input type="hidden" name="csrfmiddlewaretoken"
                            value="OXlNPTuG87gmpZkBZ01MMxD4O0RnuNN9dP9XFQvn6TwufnaPYrqTGKXigmujZ1je">
-                    <div class="r>
-                    <div class=" col-md-4">
 
                     <div class="m-1">
                         <label><b>Преподаватель:</b></label>
@@ -38,7 +40,6 @@
                             <option value="Смагин А.А.">Смагин А.А.</option>
                             <option value="Булаев А.А.">Булаев А.А.</option>
                             <option value="Курилова О.Л.">Курилова О.Л.</option>
-
                         </select>
                     </div>
                     <div class="m-1">
@@ -59,12 +60,13 @@
                             <option value="Базы данных">Базы данных</option>
                         </select>
                     </div>
+
+                    <div class="mt-3">
+                        <input type="submit" class="btn btn-primary btn-lg" value="Сохранить">
+                        <a href="/" type="button" class="btn btn-warning btn-lg"><b>Назад</b></a>
+                    </div>
+                </form>
             </div>
-            <div class="mt-3">
-                <input type="submit" class="btn btn-primary btn-lg" value="Сохранить">
-                <a href="/" type="button" class="btn btn-warning btn-lg"><b>Назад</b></a>
-            </div>
-            </form>
         </section>
     </div>
 </div>

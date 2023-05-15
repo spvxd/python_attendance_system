@@ -134,11 +134,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for count in data2 %}
                     {% for i in data3 %}
+                        {% for count in data2 %}
                         <tr>
                             <td>{{i[0]}}</td>
-                            <td>{{count[4]}}</td>
+                            <td>{{count[0]}}</td>
                             <td>{{count[2]}}</td>
                             <td>{{count[3]}}</td>
                         </tr>

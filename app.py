@@ -28,6 +28,7 @@ mydb = mysql.connector.connect(
 
 mycursor = mydb.cursor(buffered=True)
 
+
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Генерируем датасет >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 def generate_dataset(nbr):
     face_classifier = cv2.CascadeClassifier(
@@ -75,8 +76,8 @@ def generate_dataset(nbr):
 
             file_name_path = "dataset/" + nbr + "." + str(img_id) + ".jpg"
             cv2.imwrite(file_name_path, face)
-            #cv2.putText(face, str(count_img), (50, 50), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 0), 2)
-            mycursor.execute  ("""INSERT INTO `img_dataset` (`img_id`, `img_person`) VALUES
+            # cv2.putText(face, str(count_img), (50, 50), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 0), 2)
+            mycursor.execute("""INSERT INTO `img_dataset` (`img_id`, `img_person`) VALUES
                                 ('{}', '{}')""".format(img_id, nbr))
             mydb.commit()
 
@@ -119,7 +120,7 @@ def train_classifier(nbr):
 def face_recognition():  # генерирование кадра за кадром с камеры
     def draw_boundary(img, classifier, scaleFactor, minNeighbors, color, text, clf):
         gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        features = classifier.detectMultiScale(gray_image, scaleFactor = 1.3, minNeighbors = 5)
+        features = classifier.detectMultiScale(gray_image, scaleFactor=1.3, minNeighbors=5)
 
         global justscanned
         global pause_cnt
@@ -165,7 +166,6 @@ def face_recognition():  # генерирование кадра за кадро
                 pname = row[1]
                 pgrp = row[2]
 
-
                 if int(cnt) == 30:
                     cnt = 0
 
@@ -186,7 +186,8 @@ def face_recognition():  # генерирование кадра за кадро
 
             else:
                 if not justscanned:
-                    cv2.putText(img, 'Неизвестный', (x, y - 5), cv2.FONT_HERSHEY_COMPLEX, 0.8, (0, 0, 255), 2, cv2.LINE_AA)
+                    cv2.putText(img, 'Неизвестный', (x, y - 5), cv2.FONT_HERSHEY_COMPLEX, 0.8, (0, 0, 255), 2,
+                                cv2.LINE_AA)
                 else:
                     cv2.putText(img, '', (x, y - 5), cv2.FONT_HERSHEY_COMPLEX, 0.8, (0, 0, 255), 2, cv2.LINE_AA)
 
@@ -247,10 +248,12 @@ def person(id):
     data = mycursor.fetchall()
     mycursor.execute("select accs_added from accs_hist WHERE accs_prsn=%s", (id,))
     data3 = mycursor.fetchall()
-    mycursor.execute("select * from classes WHERE student=%s", (id,))
+    mycursor.execute("select accs_prsn from accs_hist WHERE accs_prsn=%s ORDER BY accs_id DESC LIMIT 1 ", (id,))
     data2 = mycursor.fetchall()
-
-    return render_template('person.html', data=data, data2=data2, data3 = data3)
+    print(data2)
+    # mycursor.execute("UPDATE classes SET accs_prsn =%s WHERE accs_prsn IS NULL")
+    # mydb.commit()
+    return render_template('person.html', data=data, data2=data2, data3=data3)
 
 
 @app.route('/choose')
@@ -258,15 +261,14 @@ def choose():
     return render_template('choose.html')
 
 
-
-@app.route('/choose_submit',  methods=['POST'])
+@app.route('/choose_submit', methods=['POST'])
 def choose_submit():
     teacher = request.form.get('teacher')
     classroom = request.form.get('classroom')
     subject = request.form.get('subject')
     mycursor.execute("""INSERT INTO `classes` ( `teacher`, `subject`, `classroom` ) VALUES
-                        ('{}', '{}', '{}')""".format( teacher, subject, classroom))
-    mydb.commit()
+                            ( '{}', '{}', '{}')""".format(teacher, subject, classroom))
+
     return redirect(url_for('fr_page'))
 
 
@@ -279,6 +281,7 @@ def delete(id):
     data = mycursor.fetchall()
 
     return render_template('index.html', data=data)
+
 
 @app.route('/addprsn')
 def addprsn():
@@ -302,7 +305,8 @@ def addprsn_submit():
     img = save_images(request.files['image'])
 
     mycursor.execute("""INSERT INTO `prs_mstr` (`prs_nbr`, `prs_name`, `prs_grp`, `prs_tel`, `prs_course`,`prs_email`,`prs_img`, `prs_birth` ) VALUES
-                    ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')""".format(prsnbr, prsname, prsgrp, prstel, prscourse, prsemail, img, prsbirth))
+                    ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')""".format(prsnbr, prsname, prsgrp, prstel,
+                                                                               prscourse, prsemail, img, prsbirth))
     mydb.commit()
 
     # return redirect(url_for('home'))
@@ -322,11 +326,11 @@ def vidfeed_dataset(nbr):
 
 @app.route('/video_feed')
 def video_feed():
-    #Поток видео
+    # Поток видео
     return Response(face_recognition(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
-@app.route('/fr_page' )
+@app.route('/fr_page')
 def fr_page():
     """Страница для сканирования."""
     mycursor.execute("select a.accs_id, a.accs_prsn, b.prs_name, b.prs_grp, a.accs_added "
@@ -335,18 +339,17 @@ def fr_page():
                      " where a.accs_date = curdate() "
                      " order by 1 desc")
     data = mycursor.fetchall()
-    print(data)
-    print(data[0][1])
-    cur_student = data[0][1]
-    mycursor.execute("""UPDATE classes SET student = {}""".format(cur_student))
-    # mycursor.execute("""INSERT INTO classes SELECT accs_prsn FROM accs_hist WHERE accs_id = 1""")
+
     return render_template('fr_page.html', data=data)
+
 
 @app.route('/fr_page_delete')
 def fr_page_delete():
     mycursor.execute("TRUNCATE TABLE `accs_hist`")
     mydb.commit()
-    return redirect(url_for('fr_page' ))
+    return redirect(url_for('fr_page'))
+
+
 @app.route('/countTodayScan')
 def countTodayScan():
     mydb = mysql.connector.connect(
