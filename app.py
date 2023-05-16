@@ -172,9 +172,20 @@ def face_recognition():  # генерирование кадра за кадро
                     mycursor.execute("insert into accs_hist (accs_date, accs_prsn) values('" + str(
                         date.today()) + "', '" + pnbr + "')")
                     mydb.commit()
-                    sql = "UPDATE classes SET accs_prsn = %s WHERE teacher IS NOT NULL"
+
+                    sql = "UPDATE classes SET student = %s ORDER BY id DESC LIMIT 1"
                     val = (pnbr,)
                     mycursor.execute(sql, val)
+                    mydb.commit()
+                    mycursor.execute("SELECT * FROM classes ORDER BY id DESC LIMIT 1")
+                    class_data = mycursor.fetchone()
+                    print(class_data)
+                    teacher = class_data[2]
+                    subject = class_data[3]
+                    classroom = class_data[4]
+                    print(teacher, subject, classroom)
+                    mycursor.execute("""INSERT INTO `classes` ( `teacher`, `subject`, `classroom` ) VALUES
+                                               ('{}', '{}', '{}')""".format(teacher, subject, classroom))
                     mydb.commit()
                     cv2.putText(img, pname + ' | ' + pgrp, (x - 100, y - 30), cv2.FONT_HERSHEY_COMPLEX, 0.8,
                                 (153, 255, 255), 2, cv2.LINE_AA)
@@ -249,14 +260,18 @@ def save_images(photo):
 def person(id):
     mycursor.execute("select * from prs_mstr WHERE prs_nbr=%s", (id,))
     data = mycursor.fetchall()
-    mycursor.execute("select accs_added from accs_hist WHERE accs_prsn=%s", (id,))
-    data3 = mycursor.fetchall()
-    mycursor.execute("select accs_prsn from accs_hist WHERE accs_prsn=%s ORDER BY accs_id DESC LIMIT 1 ", (id,))
+    # mycursor.execute("select accs_added from accs_hist WHERE accs_prsn=%s", (id,))
+    # data3 = mycursor.fetchall()
+    # mycursor.execute("SELECT * FROM classes  WHERE student = %s", (id,))
+    # data2 = mycursor.fetchall()
+    # print(data2)
+    mycursor.execute("select a.accs_added, a.accs_prsn, b.student, b.subject, b.teacher, b.classroom "
+                     "  from accs_hist a "
+                     "  left join classes b on a.accs_prsn = b.student "
+                     " where a.accs_prsn =%s ", (id,))
     data2 = mycursor.fetchall()
     print(data2)
-    # mycursor.execute("UPDATE classes SET accs_prsn =%s WHERE accs_prsn IS NULL")
-    # mydb.commit()
-    return render_template('person.html', data=data, data2=data2, data3=data3)
+    return render_template('person.html', data=data, data2=data2)
 
 
 @app.route('/choose')
@@ -269,9 +284,7 @@ def choose_submit():
     teacher = request.form.get('teacher')
     classroom = request.form.get('classroom')
     subject = request.form.get('subject')
-    # sql = "UPDATE classes SET teacher = %s, subject = %s,  classroom = %s WHERE accs_prsn IS NOT NULL"
-    # val = (teacher, subject, classroom)
-    # mycursor.execute(sql, val)
+
     mycursor.execute("""INSERT INTO `classes` ( `teacher`, `subject`, `classroom` ) VALUES
                             ('{}', '{}', '{}')""".format(teacher, subject, classroom))
     mydb.commit()
