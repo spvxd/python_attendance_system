@@ -55,7 +55,7 @@
                     <a href="">Цифровая обработка сигналов</a><br />
                     <a href="">Теория информации</a><br />
                     <a href="">Web программирование</a><br />
-                    
+
                 </div>
             </div>
             <div class="col-md-8">
@@ -134,16 +134,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for i in data3 %}
-                        {% for count in data2 %}
+                {% for row in data2 %}
                         <tr>
-                            <td>{{i[0]}}</td>
-                            <td>{{count[0]}}</td>
-                            <td>{{count[2]}}</td>
-                            <td>{{count[3]}}</td>
+                            <td>{{row[5]}}</td>
+                            <td>{{row[4]}}</td>
+                            <td>{{row[2]}}</td>
+                            <td>{{row[3]}}</td>
                         </tr>
-                    {% endfor %}
-                    {% endfor %}
+                {% endfor %}
                 </tbody>
 
             </table>

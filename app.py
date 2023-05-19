@@ -173,8 +173,9 @@ def face_recognition():  # генерирование кадра за кадро
                         date.today()) + "', '" + pnbr + "')")
                     mydb.commit()
 
-                    sql = "UPDATE classes SET student = %s ORDER BY id DESC LIMIT 1"
-                    val = (pnbr,)
+                    sql = "UPDATE classes SET student = %s, history = %s ORDER BY id DESC LIMIT 1"
+                    history = str(date.today())
+                    val = (pnbr, history)
                     mycursor.execute(sql, val)
                     mydb.commit()
                     mycursor.execute("SELECT * FROM classes ORDER BY id DESC LIMIT 1")
@@ -265,10 +266,7 @@ def person(id):
     # mycursor.execute("SELECT * FROM classes  WHERE student = %s", (id,))
     # data2 = mycursor.fetchall()
     # print(data2)
-    mycursor.execute("select a.accs_added, a.accs_prsn, b.student, b.subject, b.teacher, b.classroom "
-                     "  from accs_hist a "
-                     "  left join classes b on a.accs_prsn = b.student "
-                     " where a.accs_prsn =%s ", (id,))
+    mycursor.execute("select * from classes where student =%s ", (id,))
     data2 = mycursor.fetchall()
     print(data2)
     return render_template('person.html', data=data, data2=data2)
